@@ -31,6 +31,7 @@ public class Author {
 
     private boolean builtIn =false;
 
+
     @JsonIgnore
     @OneToMany(mappedBy = "author")
     private List<Book> bookList;

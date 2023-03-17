@@ -1,15 +1,18 @@
 package com.lib.dto;
 
 
+import com.lib.domain.Author;
+import com.lib.domain.Category;
 import com.lib.domain.ImageFile;
 
 
-
+import com.lib.domain.Publisher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -23,10 +26,9 @@ public class BookDTO {
     private String name;
     private String isbn;
     private Integer pageCount;
-    private Long authorId;
-    private Long publisherId;
+
+
     private Integer publishDate;
-    private Long categoryId;
     private Set<ImageFile> imageFile;
     private String shelfCode;
     private boolean active;
@@ -35,4 +37,7 @@ public class BookDTO {
     private LocalDateTime createDate;
     private boolean builtIn;
 
+    private Category category;
+    private Publisher publisher;
+    private Author author;
 }

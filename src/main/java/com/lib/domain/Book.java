@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -36,25 +35,21 @@ public class Book {
     @Column(nullable = false)
     private Integer pageCount;
 
-
-
     @Column(nullable = false)
     private Integer publishDate;
-
 
     @OneToMany(orphanRemoval = true)
     @JoinColumn(name = "book__id")
     private Set<ImageFile> imageFile;
 
-
     @NotNull(message = "ShelfCode cannot be null")
     @Column(length = 6)
     private String shelfCode;
 
-
     private boolean active=true;
     private boolean featured;
     private boolean loanable=true;
+
     @NotNull
     private LocalDateTime createDate = LocalDateTime.now();
 

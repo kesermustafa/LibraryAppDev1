@@ -2,6 +2,7 @@ package com.lib.domain;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -30,6 +32,10 @@ public class Category {
 
     @NotNull(message = "Category name cannot be null")
     private int sequence;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "category")
+    private List<Book> bookList;
 
 
 }
