@@ -4,6 +4,7 @@ import com.lib.domain.*;
 import com.lib.dto.BookDTO;
 import com.lib.dto.request.BookRequest;
 import com.lib.dto.request.BookUpdateRequest;
+import com.lib.exception.BadRequestException;
 import com.lib.exception.ConflictException;
 import com.lib.exception.ResourceNotFoundException;
 import com.lib.exception.message.ErrorMessage;
@@ -157,7 +158,18 @@ public class BookService {
 
         Book book = getBookById(id);
 
-                                // ---- BOOK LOAN KONTROL EDILECEK
+        if(book.isBuiltIn()){
+            throw new BadRequestException(ErrorMessage.NOT_PERMITTED_METHOD_MESSAGE);
+        }
+
+       List<Loan> loans =loanService.findByBookId(book.getId());
+        if(loans !=null){
+            for ( Loan w : loans ) {
+                if (w.getReturnDate() == null){
+                    throw new BadRequestException(ErrorMessage.NOT_DELETED_METHOD_MESSAGE);
+                }
+            }
+        }
 
         bookRepository.delete(book);
     }
@@ -167,8 +179,52 @@ public class BookService {
 
         Book book = getBookById(id);
 
+        if(updateRequest.getImageId() !=null) {
+
+            ImageFile imageFile = imageFileService.findImageById(updateRequest.getImageId());
+
+            if (!book.getImageFile().contains(updateRequest.getImageId())) {
+                Integer usedBookCount = bookRepository.findBookCountByImageId(imageFile.getId());
+                if (usedBookCount > 0) {
+                    throw new ConflictException(ErrorMessage.IMAGE_USED_MESSAGE);
+                }
+            }
+
+            Set<ImageFile> imageFiles = new HashSet<>();
+            imageFiles.add(imageFile);
+            book.setImageFile(imageFiles);
+        }else{
+            book.setImageFile(book.getImageFile());
+        }
+
+
+        Author author = authorService.getById(updateRequest.getAuthorId());
+        Publisher publisher = publisherSevice.publisherFindById(updateRequest.getPublisherId());
+        Category category = categoryService.findById(updateRequest.getCategoryId());
+
+        book.setName(updateRequest.getName());
+        book.setIsbn(updateRequest.getIsbn());
+        book.setPageCount(updateRequest.getPageCount());
+        book.setPublishDate(updateRequest.getPublishDate());
+        book.setShelfCode(updateRequest.getShelfCode());
+        book.setFeatured(updateRequest.isFeatured());
+        book.setActive(updateRequest.isActive());
+        book.setLoanable(updateRequest.isLoanable());
+        book.setBuiltIn(updateRequest.isBuiltIn());
+        book.setAuthor(author);
+        book.setPublisher(publisher);
+        book.setCategory(category);
+
+        bookRepository.save(book);
     }
 
+
+    public List<Book> getAuthorBooks(Long authorId) {
+
+        List<Book>  bookList = bookRepository.findAllByAuthorId(authorId);
+
+        return bookList;
+    }
 
 
 }

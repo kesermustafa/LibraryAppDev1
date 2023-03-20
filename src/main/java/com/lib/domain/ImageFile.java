@@ -27,7 +27,6 @@ public class ImageFile {
 
     private long length;
 
-
     @OneToOne(cascade = CascadeType.ALL)
     private ImageData imageData;
 

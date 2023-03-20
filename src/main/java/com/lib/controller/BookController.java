@@ -1,7 +1,6 @@
 package com.lib.controller;
 
-import com.lib.domain.Book;
-import com.lib.dto.AuthorDTO;
+
 import com.lib.dto.BookDTO;
 import com.lib.dto.request.BookRequest;
 import com.lib.dto.request.BookUpdateRequest;

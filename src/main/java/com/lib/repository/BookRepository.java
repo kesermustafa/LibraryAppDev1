@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,6 +21,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @EntityGraph(attributePaths = {"author", "publisher", "category"})
     Optional<Book> findById(Long id);
 
+
+    @Query("SELECT b FROM Book b WHERE b.author.id =:pId")
+    List<Book> findAllByAuthorId(@Param("pId") Long authorId);
 
 
 }

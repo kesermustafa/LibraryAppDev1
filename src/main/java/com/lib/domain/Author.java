@@ -10,6 +10,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "t_author")
 public class Author {
 
     @Id
@@ -34,7 +36,7 @@ public class Author {
 
     @JsonIgnore
     @OneToMany(mappedBy = "author")
-    private List<Book> bookList;
+    private List<Book> bookList = new ArrayList<>();
 
 
 }

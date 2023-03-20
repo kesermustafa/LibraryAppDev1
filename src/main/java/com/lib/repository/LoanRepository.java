@@ -20,4 +20,9 @@ public interface LoanRepository extends JpaRepository<Loan,Long> {
     List<Loan> findAllByUserId(Long id);
 
 
+    void existsByUserId(Long id);
+
+    List<Loan> findByBookId(Long id);
+
+
 }

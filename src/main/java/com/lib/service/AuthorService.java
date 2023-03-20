@@ -1,6 +1,7 @@
 package com.lib.service;
 
 import com.lib.domain.Author;
+import com.lib.domain.Book;
 import com.lib.dto.AuthorDTO;
 import com.lib.dto.request.AuthorRequest;
 import com.lib.exception.BadRequestException;
@@ -8,19 +9,23 @@ import com.lib.exception.ResourceNotFoundException;
 import com.lib.exception.message.ErrorMessage;
 import com.lib.mapper.AuthorMapper;
 import com.lib.repository.AuthorRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
-
+    private final BookService bookService;
     private final AuthorMapper authorMapper;
 
-    public AuthorService(AuthorRepository authorRepository, AuthorMapper authorMapper) {
+    public AuthorService(AuthorRepository authorRepository, @Lazy BookService bookService, AuthorMapper authorMapper) {
         this.authorRepository = authorRepository;
+        this.bookService = bookService;
         this.authorMapper = authorMapper;
     }
 
@@ -85,4 +90,13 @@ public class AuthorService {
 
         return getUserDTOPage(authorPage);
     }
+
+
+    public List<Book> getAuthorBooks(Long authorId) {
+
+        List<Book> bookList =  bookService.getAuthorBooks(authorId);
+        return bookList;
+    }
+
+
 }

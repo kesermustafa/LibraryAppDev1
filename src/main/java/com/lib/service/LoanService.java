@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Service
@@ -89,6 +90,13 @@ public class LoanService {
             default -> throw new BadRequestException(ErrorMessage.SCORE_IS_NOT_ENOUGH);
         }
         return finishDate;
+    }
+
+
+    public List<Loan> findByBookId(Long id) {
+
+        List<Loan> loans =  loanRepository.findByBookId(id);
+        return loans;
     }
 
 

@@ -39,7 +39,7 @@ public class Book {
     private Integer publishDate;
 
     @OneToMany(orphanRemoval = true)
-    @JoinColumn(name = "book__id")
+    @JoinColumn(name = "book_id")
     private Set<ImageFile> imageFile;
 
     @NotNull(message = "ShelfCode cannot be null")
@@ -56,12 +56,15 @@ public class Book {
     private boolean builtIn =false;
 
     @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @ManyToOne
+    @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
     @ManyToOne
+    @JoinColumn(name = "author_id")
     private Author author;
 
 

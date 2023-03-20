@@ -29,6 +29,11 @@ public class CategoryService {
     public void categorySave(CategoryRequest categoryRequest) {
 
         Category category = new Category();
+        List<Category> categoryList = categoryRepository.findAll();
+
+        if(categoryList.size()==0){
+            category.setSequence(1);
+        }
 
         category.setName(categoryRequest.getName());
         category.setBuiltIn(categoryRequest.isBuiltIn());

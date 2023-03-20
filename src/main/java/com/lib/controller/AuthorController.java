@@ -1,6 +1,7 @@
 package com.lib.controller;
 
 import com.lib.domain.Author;
+import com.lib.domain.Book;
 import com.lib.dto.AuthorDTO;
 import com.lib.dto.request.AuthorRequest;
 import com.lib.dto.response.LibResponse;
@@ -16,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/authors")
@@ -89,6 +91,13 @@ public class AuthorController {
 
     }
 
+    // Yazara ait kitaplar
+    @GetMapping("/visitors/books/{authorId}")
+    public ResponseEntity<List<Book>> getAuthorBooks(@PathVariable("authorId") Long authorId){
+
+        List<Book> bookList = authorService.getAuthorBooks(authorId);
+        return ResponseEntity.ok(bookList);
+    }
 
 
 }
