@@ -10,11 +10,13 @@ import com.lib.exception.ResourceNotFoundException;
 import com.lib.exception.message.ErrorMessage;
 import com.lib.mapper.BookMapper;
 import com.lib.repository.BookRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -29,8 +31,8 @@ public class BookService {
 
 
     public BookService(BookRepository bookRepository, AuthorService authorService,
-                       PublisherSevice publisherSevice, CategoryService categoryService,
-                       ImageFileService imageFileService, LoanService loanService, BookMapper bookMapper) {
+                       PublisherSevice publisherSevice,  CategoryService categoryService,
+                       ImageFileService imageFileService,  LoanService loanService, BookMapper bookMapper) {
 
         this.bookRepository = bookRepository;
         this.authorService = authorService;
@@ -64,6 +66,12 @@ public class BookService {
                 throw new ConflictException(ErrorMessage.IMAGE_USED_MESSAGE);
             }
         }
+
+        boolean exsistsByIsbn = bookRepository.existsByIsbn(bookRequest.getIsbn());
+        if(exsistsByIsbn){
+            throw new ConflictException(String.format(ErrorMessage.ISBN_ALREADY_EXIST_MESSAGE, bookRequest.getIsbn()));
+        }
+
 
         Book book = new Book();
 
@@ -109,11 +117,7 @@ public class BookService {
         bookDTO.setIsbn( book.getIsbn() );
         bookDTO.setPageCount( book.getPageCount() );
         bookDTO.setPublishDate( book.getPublishDate() );
-
-        Set<ImageFile> set = book.getImageFile();
-        if ( set != null ) {
-            bookDTO.setImageFile( new LinkedHashSet<ImageFile>( set ) );
-        }
+        bookDTO.setImageFile( getImageIds(book.getImageFile()) );
         bookDTO.setShelfCode( book.getShelfCode() );
         bookDTO.setActive( book.isActive() );
         bookDTO.setFeatured( book.isFeatured() );
@@ -127,6 +131,14 @@ public class BookService {
         return bookDTO;
     }
 
+    public static Set<String> getImageIds(Set<ImageFile> imageFiles){
+
+        Set<String> imgs = new HashSet<>();
+        imgs = imageFiles.stream().
+                map(imFile->imFile.getId().toString()).
+                collect(Collectors.toSet());
+        return imgs;
+    }
 
     public List<BookDTO> map(List<Book> books) {
         if ( books == null ) {
@@ -143,14 +155,7 @@ public class BookService {
     public Page<BookDTO> findAllWithPage(Pageable pageable) {
 
         Page<Book> bookPage = bookRepository.findAll(pageable);
-        return getUserDTOPage(bookPage);
-    }
-
-
-    private Page<BookDTO> getUserDTOPage(Page<Book> bookPage){
-        return bookPage.map(
-                book -> bookToBookDTO(book)
-        );
+        return bookPage.map(book ->bookToBookDTO(book));
     }
 
 
@@ -170,7 +175,6 @@ public class BookService {
                 }
             }
         }
-
         bookRepository.delete(book);
     }
 
@@ -218,13 +222,6 @@ public class BookService {
         bookRepository.save(book);
     }
 
-
-    public List<Book> getAuthorBooks(Long authorId) {
-
-        List<Book>  bookList = bookRepository.findAllByAuthorId(authorId);
-
-        return bookList;
-    }
 
 
 }

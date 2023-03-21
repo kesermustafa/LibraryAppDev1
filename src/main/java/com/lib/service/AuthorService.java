@@ -92,11 +92,6 @@ public class AuthorService {
     }
 
 
-    public List<Book> getAuthorBooks(Long authorId) {
-
-        List<Book> bookList =  bookService.getAuthorBooks(authorId);
-        return bookList;
-    }
 
 
 }

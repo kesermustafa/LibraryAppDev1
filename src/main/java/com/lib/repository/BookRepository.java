@@ -1,6 +1,8 @@
 package com.lib.repository;
 
 import com.lib.domain.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,12 +20,13 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Integer findBookCountByImageId(@Param("id") String id);
 
 
-    @EntityGraph(attributePaths = {"author", "publisher", "category"})
+    @EntityGraph(attributePaths = {"author", "publisher", "category", "imageFile"})
     Optional<Book> findById(Long id);
 
+    boolean existsByIsbn(String isbn);
 
-    @Query("SELECT b FROM Book b WHERE b.author.id =:pId")
-    List<Book> findAllByAuthorId(@Param("pId") Long authorId);
+    @EntityGraph(attributePaths = {"author", "publisher", "category","imageFile"})
+    Page<Book> findAll(Pageable pageable);
 
 
 }

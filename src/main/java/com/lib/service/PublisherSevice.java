@@ -1,6 +1,7 @@
 package com.lib.service;
 
 
+import com.lib.domain.Book;
 import com.lib.domain.Publisher;
 
 import com.lib.dto.PublisherDTO;
@@ -10,23 +11,28 @@ import com.lib.exception.ResourceNotFoundException;
 import com.lib.exception.message.ErrorMessage;
 import com.lib.mapper.PublisherMapper;
 import com.lib.repository.PublisherRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PublisherSevice {
 
     private final PublisherRepository publisherRepository;
     private final PublisherMapper publisherMapper;
+    private final BookService bookService;
 
     private final UserService userService;
 
     public PublisherSevice(PublisherRepository publisherRepository,
-                           PublisherMapper publisherMapper, UserService userService) {
+                           PublisherMapper publisherMapper, @Lazy BookService bookService, UserService userService) {
 
         this.publisherRepository = publisherRepository;
         this.publisherMapper = publisherMapper;
+        this.bookService = bookService;
         this.userService = userService;
     }
 

@@ -34,6 +34,7 @@ public class Category {
     @NotNull(message = "Category name cannot be null")
     private int sequence;
 
+
     @JsonIgnore
     @OneToMany(mappedBy = "category")
     private List<Book> bookList = new ArrayList<>();

@@ -91,13 +91,5 @@ public class AuthorController {
 
     }
 
-    // Yazara ait kitaplar
-    @GetMapping("/visitors/books/{authorId}")
-    public ResponseEntity<List<Book>> getAuthorBooks(@PathVariable("authorId") Long authorId){
-
-        List<Book> bookList = authorService.getAuthorBooks(authorId);
-        return ResponseEntity.ok(bookList);
-    }
-
 
 }

@@ -26,18 +26,16 @@ public class BookDTO {
     private String name;
     private String isbn;
     private Integer pageCount;
-
-
     private Integer publishDate;
-    private Set<ImageFile> imageFile;
     private String shelfCode;
     private boolean active;
     private boolean featured;
     private boolean loanable;
     private LocalDateTime createDate;
     private boolean builtIn;
-
+    private Set<String> imageFile;
     private Category category;
     private Publisher publisher;
     private Author author;
+
 }

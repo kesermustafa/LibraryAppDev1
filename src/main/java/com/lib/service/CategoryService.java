@@ -31,7 +31,7 @@ public class CategoryService {
         Category category = new Category();
         List<Category> categoryList = categoryRepository.findAll();
 
-        if(categoryList.size()==0){
+        if(categoryList == null){
             category.setSequence(1);
         }
 
