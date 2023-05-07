@@ -1,6 +1,7 @@
 package com.lib.dto;
 
 import com.lib.domain.Book;
+import com.lib.domain.Loan;
 import com.lib.domain.User;
 
 import lombok.AllArgsConstructor;
@@ -25,5 +26,15 @@ public class LoanDTO {
     private Long bookId;
     private Long userId;
 
+
+    public LoanDTO(Loan loan){
+        this.id=loan.getId();
+        this.loanDate=loan.getLoanDate();
+        this.expireDate=loan.getExpireDate();
+        this.returnDate=loan.getReturnDate();
+        this.notes=loan.getNotes();
+        this.userId= loan.getUser().getId();
+        this.bookId= loan.getBook().getId();
+    }
 
 }

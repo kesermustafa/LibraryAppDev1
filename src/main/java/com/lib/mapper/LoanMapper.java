@@ -2,9 +2,8 @@ package com.lib.mapper;
 
 import com.lib.domain.Loan;
 import com.lib.dto.LoanDTO;
-import com.lib.dto.request.LoanRequest;
+import com.lib.dto.request.LoanCreateRequest;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ public interface LoanMapper {
 
     LoanDTO loanToLoanDTO(Loan loan);
 
-    Loan loanRequestToLoan(LoanRequest loanRequest);
+    Loan loanRequestToLoan(LoanCreateRequest loanCreateRequest);
 
     List<LoanDTO> loanListToLoanDTOList(List<Loan> loan);
 

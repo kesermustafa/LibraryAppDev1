@@ -32,7 +32,7 @@ public class BookService {
 
     public BookService(BookRepository bookRepository, AuthorService authorService,
                        PublisherSevice publisherSevice,  CategoryService categoryService,
-                       ImageFileService imageFileService,  LoanService loanService, BookMapper bookMapper) {
+                       ImageFileService imageFileService,  @Lazy LoanService loanService, BookMapper bookMapper) {
 
         this.bookRepository = bookRepository;
         this.authorService = authorService;
@@ -47,7 +47,7 @@ public class BookService {
     public Book getBookById(Long bookId){
 
         Book book=bookRepository.findById(bookId).orElseThrow(()->
-                new ResourceNotFoundException(String.format(ErrorMessage.USER_NOT_FOUNT_EXCEPTION,bookId)));
+                new ResourceNotFoundException(String.format(ErrorMessage.BOOK_NOT_FOUNT_EXCEPTION,bookId)));
         return book;
     }
 
@@ -223,5 +223,8 @@ public class BookService {
     }
 
 
+    public void save(Book book) {
+        bookRepository.save(book);
+    }
 
 }

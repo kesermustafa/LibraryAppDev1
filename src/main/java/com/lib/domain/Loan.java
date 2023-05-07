@@ -3,6 +3,7 @@ package com.lib.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ public class Loan {
 
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy HH:mm:ss")
     private LocalDateTime loanDate=LocalDateTime.now();
+
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy HH:mm:ss")
     @NotNull(message="Please provide expire date of the book")
     private LocalDateTime expireDate;
@@ -42,11 +44,12 @@ public class Loan {
     @Size(max = 300)
     private String notes;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id",referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_id")
     private Book book;
-    @ManyToOne
-    @JoinColumn(name = "user_id",referencedColumnName = "id")
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private User user;
 
 

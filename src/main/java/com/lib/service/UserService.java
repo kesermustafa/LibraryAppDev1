@@ -45,7 +45,7 @@ public class UserService {
     private final LoanMapper loanMapper;
 
     public UserService(UserRepository userRepository, RoleService roleService, UserMapper userMapper,
-                       @Lazy PasswordEncoder passwordEncoder, LoanService loanService,
+                       @Lazy PasswordEncoder passwordEncoder, @Lazy LoanService loanService,
                        LoanRepository loanRepository, LoanMapper loanMapper) {
 
         this.userRepository = userRepository;
@@ -370,4 +370,7 @@ public class UserService {
         return (long) userRepository.findAll().size();
     }
 
+    public void save(User user) {
+        userRepository.save(user);
+    }
 }
