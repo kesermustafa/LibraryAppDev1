@@ -12,14 +12,14 @@ import org.checkerframework.checker.guieffect.qual.SafeEffect;
 @NoArgsConstructor
 public class ReportResponse {
 
-    private Integer books;
-    private Integer authors;
-    private Integer publishers;
-    private Integer categories;
-    private Integer loans;
-    private Integer unReturnedBooks;
-    private  Integer expiredBooks;
-    private Integer members;
+    private Long books;
+    private Long authors;
+    private Long publishers;
+    private Long categories;
+    private Long loans;
+    private Long unReturnedBooks;
+    private Long expiredBooks;
+    private Long members;
 
 
 

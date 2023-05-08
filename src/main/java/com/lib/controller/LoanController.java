@@ -96,7 +96,7 @@ public class LoanController {
 
 
     @PreAuthorize("hasRole('MEMBER')")
-    @GetMapping("/loans/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Loan> getLoanById(@PathVariable(value="id") Long loanId){
 
 

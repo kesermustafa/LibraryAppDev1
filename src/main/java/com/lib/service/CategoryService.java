@@ -31,13 +31,14 @@ public class CategoryService {
         Category category = new Category();
         List<Category> categoryList = categoryRepository.findAll();
 
-        if(categoryList == null){
-            category.setSequence(1);
-        }
 
         category.setName(categoryRequest.getName());
         category.setBuiltIn(categoryRequest.isBuiltIn());
-        category.setSequence(endSequence().get(0).getSequence()+1);
+
+        if(categoryList.size()!=0){
+            category.setSequence(endSequence().get(0).getSequence()+1);
+        }
+
 
         categoryRepository.save(category);
 
@@ -104,11 +105,9 @@ public class CategoryService {
     }
 
 
-
-
-
-
-
+    public Long allCategory() {
+        return categoryRepository.count();
+    }
 
 
 }

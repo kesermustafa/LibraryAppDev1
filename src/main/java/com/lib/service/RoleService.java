@@ -28,4 +28,10 @@ public class RoleService {
     }
 
 
+
+
+
+    public Long memberCount() {
+       return roleRepository.countOfMember();
+    }
 }

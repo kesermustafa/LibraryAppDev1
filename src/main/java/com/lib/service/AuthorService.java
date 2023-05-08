@@ -91,6 +91,12 @@ public class AuthorService {
         return getUserDTOPage(authorPage);
     }
 
+    public Long allAuthor() {
+        return authorRepository.count();
+    }
+
+
+
 
 
 

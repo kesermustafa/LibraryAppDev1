@@ -32,9 +32,11 @@ public class User {
     @NotNull(message = "first name cannot be null")
     @Size(min = 2,max = 30,message = "First name '${validateValue}' should be between {min} and {max}")
     private String firstName;
+
     @NotNull(message = "last name cannot be null")
     @Size(min = 2,max = 30,message = "last name '${validateValue}' should be between {min} and {max}")
     private String lastName;
+
     @NotNull(message = "first name cannot be null")
     private Integer score=0;
 

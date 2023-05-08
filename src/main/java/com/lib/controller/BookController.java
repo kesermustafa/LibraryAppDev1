@@ -38,7 +38,7 @@ public class BookController {
 
         bookService.saveBook(bookRequest);
         LibResponse response = new LibResponse(ResponseMessage.BOOK_CREATED_RESPONSE, true);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 
@@ -46,7 +46,7 @@ public class BookController {
     public ResponseEntity<BookDTO> getBookById(@PathVariable Long id){
 
        BookDTO bookDTO = bookService.findById(id);
-        return ResponseEntity.ok(bookDTO);
+       return ResponseEntity.ok(bookDTO);
     }
 
     @GetMapping("/visitors")

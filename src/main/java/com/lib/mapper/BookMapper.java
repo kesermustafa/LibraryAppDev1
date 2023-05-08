@@ -3,6 +3,7 @@ package com.lib.mapper;
 import com.lib.domain.Book;
 import com.lib.domain.ImageFile;
 import com.lib.dto.BookDTO;
+import com.lib.dto.response.BookResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -18,7 +19,7 @@ public interface BookMapper {
     @Mapping(source = "imageFile", target = "imageFile", qualifiedByName = "getImageAsString")
     BookDTO bookToBookDTO(Book book);
 
-    List<BookDTO> map(List<Book> books);
+   // List<BookDTO> map(List<Book> books);
 
 
 
@@ -33,5 +34,11 @@ public interface BookMapper {
 
         return imgs;
     }
+
+
+    BookResponse bookToBookResponse(Book book);
+
+
+    List<BookResponse> map(List<Book> book);
 
 }

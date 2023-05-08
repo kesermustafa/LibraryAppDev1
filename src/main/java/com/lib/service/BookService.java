@@ -4,6 +4,7 @@ import com.lib.domain.*;
 import com.lib.dto.BookDTO;
 import com.lib.dto.request.BookRequest;
 import com.lib.dto.request.BookUpdateRequest;
+import com.lib.dto.response.BookResponse;
 import com.lib.exception.BadRequestException;
 import com.lib.exception.ConflictException;
 import com.lib.exception.ResourceNotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -226,5 +228,24 @@ public class BookService {
     public void save(Book book) {
         bookRepository.save(book);
     }
+
+
+    public Long allBook() {
+        return bookRepository.count();
+    }
+
+
+    public Page<BookResponse> findBookByLoanableIsFalse(Pageable pageable) {
+
+        Page<Book> books = bookRepository.findBookByLoanableIsFalse(pageable);
+
+        Page<BookResponse> bookResponsePage =  books.map(book -> bookMapper.bookToBookResponse(book));
+
+        return bookResponsePage;
+    }
+
+
+
+
 
 }

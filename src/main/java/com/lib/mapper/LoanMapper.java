@@ -17,4 +17,8 @@ public interface LoanMapper {
     List<LoanDTO> loanListToLoanDTOList(List<Loan> loan);
 
 
+
+
+
+
 }

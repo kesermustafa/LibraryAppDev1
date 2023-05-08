@@ -94,6 +94,11 @@ public class PublisherSevice {
         publisherRepository.delete(publisher);
     }
 
+    public Long allPublisher() {
+        return publisherRepository.count();
+    }
+
+
 
 
 
