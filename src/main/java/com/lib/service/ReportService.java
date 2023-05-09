@@ -1,8 +1,7 @@
 package com.lib.service;
 
-import com.lib.domain.Book;
+import com.lib.dto.response.BookExcelReport;
 import com.lib.dto.response.BookResponse;
-import com.lib.dto.response.MostBorrowersResponse;
 import com.lib.dto.response.ReportResponse;
 import com.lib.exception.message.ErrorMessage;
 import com.lib.report.ExcelReporter;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -66,12 +64,9 @@ public class ReportService {
         report.setExpiredBooks(ExpiredBooksCount);
 
         Long memberCount = roleService.memberCount();
-
         report.setMembers(memberCount);
 
         return report;
-
-
     }
 
 
@@ -103,6 +98,19 @@ public class ReportService {
         List<Object> mostPopularBooks = loanService.popularBooksReport(amount, pageable);
 
         return mostPopularBooks;
+    }
+
+
+    public ByteArrayInputStream getBookReport() {
+
+        List<BookExcelReport> books = bookService.getBooks();
+
+        try {
+            return ExcelReporter.getLibraryExcelReport(books);
+        } catch (IOException e) {
+            throw new RuntimeException(ErrorMessage.EXCEL_REPORT_ERROR_MESAGE);
+        }
+
     }
 
 

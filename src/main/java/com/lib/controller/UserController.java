@@ -111,6 +111,7 @@ public class UserController {
 
 
     @GetMapping("/user/loans")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE') or hasRole('MEMBER')")
     public ResponseEntity<Page<LoanDTO>> getAllUsersLoans(@RequestParam("page") int page,
                                                           @RequestParam("size") int size,
                                                           @RequestParam("sort") String prop,

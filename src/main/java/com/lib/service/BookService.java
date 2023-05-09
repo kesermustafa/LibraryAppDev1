@@ -4,6 +4,7 @@ import com.lib.domain.*;
 import com.lib.dto.BookDTO;
 import com.lib.dto.request.BookRequest;
 import com.lib.dto.request.BookUpdateRequest;
+import com.lib.dto.response.BookExcelReport;
 import com.lib.dto.response.BookResponse;
 import com.lib.exception.BadRequestException;
 import com.lib.exception.ConflictException;
@@ -16,7 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -245,7 +246,11 @@ public class BookService {
     }
 
 
+    public List<BookExcelReport> getBooks() {
 
+       List<Book> books = bookRepository.findAll();
+       List<BookExcelReport> excelReports = bookMapper.mapl(books);
 
-
+        return excelReports;
+    }
 }

@@ -11,13 +11,16 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 @Configuration
@@ -39,8 +42,6 @@ public class SecurityConfig {
                 antMatchers("/login",
                         "/signin",
                         "/register",
-                        "/index.html",
-                        "/",
                         "/files/download/**",
                         "/files/display/**",
                         "/user/resetpassword/**",
@@ -56,6 +57,51 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+
+    //*************** cors Ayarları ****************************
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("*"). //"http:127.0.0.1/8080 diye spesific adresden gelenleri kabul et diye de diyebiliriz
+                        allowedHeaders("*").
+                        allowedMethods("*");
+            }
+        };
+    }
+
+
+    //*******************SWAGGER***********************
+
+    private static final String [] AUTH_WHITE_LIST= {
+            "/v3/api-docs/**", // swagger
+            "swagger-ui.html", //swagger
+            "/swagger-ui/**", // swagger
+            "/",
+            "index.html",
+            "/images/**",
+            "/css/**",
+            "/js/**"
+    };
+
+    // yukardaki static listeyi de giriş izni veriyoruz, boiler plate
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        WebSecurityCustomizer customizer=new WebSecurityCustomizer() {
+            @Override
+            public void customize(WebSecurity web) {
+                web.ignoring().antMatchers(AUTH_WHITE_LIST);
+            }
+        };
+        return customizer;
+    }
+
+    //**************************************************************************
+
+
 
     // Encoder
     @Bean
