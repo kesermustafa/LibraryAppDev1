@@ -53,7 +53,7 @@ public interface BookMapper {
     public static String getAuthorName(Author author){
         return author.getName();
     }
-   @Named("getPublisherName")
+    @Named("getPublisherName")
     public static String getPublisherName(Publisher publisher){
         return publisher.getName();
     }

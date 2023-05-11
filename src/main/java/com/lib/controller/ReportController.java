@@ -118,6 +118,19 @@ public class ReportController {
 
 
 
+    @GetMapping("/excel/download/users")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+    public ResponseEntity<Resource> getUserReport() {
+        String fileName = "users.xlsx";
+        ByteArrayInputStream bais = reportService.getUserReport();
+        InputStreamResource file = new InputStreamResource(bais);
+
+        return ResponseEntity.ok().
+                header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileName).
+                contentType(MediaType.parseMediaType("application/vmd.ms-excel")).
+                body(file);
+    }
+
 
 
 

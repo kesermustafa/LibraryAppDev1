@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class PublisherController {
 
         LibResponse response = new LibResponse(ResponseMessage.PUBLISHER_CREATED_RESPONSE_MESSAGE, true);
 
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
 
     }
 
@@ -71,7 +72,7 @@ public class PublisherController {
         publisherSevice.updatePublisher(id, publisherRequest);
 
         LibResponse response = new LibResponse(ResponseMessage.PUBLISHER_UPDATE_RESPONSE_MESSAGE, true);
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
@@ -81,7 +82,7 @@ public class PublisherController {
 
         publisherSevice.deletePublisher(id);
         LibResponse response = new LibResponse(ResponseMessage.PUBLISHER_DELETE_RESPONSE_MESSAGE, true);
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 

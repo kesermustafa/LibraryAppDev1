@@ -5,7 +5,7 @@ public class ResponseMessage {
 
     public final static String LOAN_CREATED_RESPONSE = "Loan successfully created";
     public final static String BOOK_CREATED_RESPONSE = "Book successfully created";
-    public final static String BOOK_DELETE_RESPONSE = "Book successfully deleted";
+    public final static String BOOK_DELETE_RESPONSE = "id : %s Book successfully deleted";
     public final static String BOOK_UPDATE_RESPONSE = "Book successfully updated";
     public final static  String PUBLISHER_CREATED_RESPONSE_MESSAGE = "Publisher successfully created";
     public final static  String PUBLISHER_UPDATE_RESPONSE_MESSAGE = "Publisher successfully updated";

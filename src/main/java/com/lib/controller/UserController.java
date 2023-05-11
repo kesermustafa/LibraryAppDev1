@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -57,9 +58,6 @@ public class UserController {
     }
 
 
-
-
-
     @PostMapping("/users")
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<LibResponse> UserCreatedByAdmin(@Valid @RequestBody AdminCreateByUserRequest request){
@@ -68,7 +66,7 @@ public class UserController {
 
         LibResponse response = new LibResponse(ResponseMessage.USER_CREATED_RESPONSE, true);
 
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 
@@ -83,7 +81,7 @@ public class UserController {
         response.setMessage(ResponseMessage.USER_UPDATE_RESPONSE_MESSAGE);
         response.setSuccess(true);
 
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
@@ -97,7 +95,7 @@ public class UserController {
         response.setMessage(ResponseMessage.USER_DELETE_RESPONSE_MESSAGE);
         response.setSuccess(true);
 
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
@@ -138,7 +136,7 @@ public class UserController {
         response.setMessage(ResponseMessage.USER_PASSWORD_UPDATE_RESPONSE_MESSAGE);
         response.setSuccess(true);
 
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 

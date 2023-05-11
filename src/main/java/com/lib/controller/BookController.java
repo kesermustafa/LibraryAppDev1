@@ -68,7 +68,7 @@ public class BookController {
 
         bookService.deleteBook(id);
 
-        LibResponse response = new LibResponse(ResponseMessage.BOOK_DELETE_RESPONSE, true);
+        LibResponse response = new LibResponse(String.format(ResponseMessage.BOOK_DELETE_RESPONSE, id), true);
         return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
@@ -84,6 +84,7 @@ public class BookController {
         return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
+
 
 
 

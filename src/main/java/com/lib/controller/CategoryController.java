@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class CategoryController {
 
         LibResponse response = new LibResponse(ResponseMessage.CATEGORY_CREATED_RESPONSE_MESSAGE, true);
 
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
 
     }
 
@@ -58,7 +59,7 @@ public class CategoryController {
 
         LibResponse response = new LibResponse(ResponseMessage.CATEGORY_DELETE_RESPONSE_MESSAGE, true);
 
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 
@@ -71,7 +72,7 @@ public class CategoryController {
 
         LibResponse response = new LibResponse(ResponseMessage.CATEGORY_UPDATE_RESPONSE_MESSAGE, true);
 
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 

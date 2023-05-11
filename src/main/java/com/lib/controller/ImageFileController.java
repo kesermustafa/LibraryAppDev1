@@ -36,7 +36,7 @@ public class ImageFileController {
         ImageSavedResponse response =
                 new ImageSavedResponse(imageId, ResponseMessage.IMAGE_SAVED_RESPONSE_MESSAGE, true);
 
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/download/{id}")

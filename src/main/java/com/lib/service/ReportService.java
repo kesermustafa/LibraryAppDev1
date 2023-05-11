@@ -1,5 +1,6 @@
 package com.lib.service;
 
+import com.lib.domain.User;
 import com.lib.dto.response.BookExcelReport;
 import com.lib.dto.response.BookResponse;
 import com.lib.dto.response.ReportResponse;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReportService {
@@ -114,5 +117,16 @@ public class ReportService {
     }
 
 
+    public ByteArrayInputStream getUserReport() {
+        List<User> user = userService.getUsers();
 
+       //List<User> sortedList = user.stream().sorted().collect(Collectors.toList());
+
+
+        try {
+            return ExcelReporter.getUserExcelReport(user);
+        } catch (IOException e) {
+            throw new RuntimeException(ErrorMessage.EXCEL_REPORT_ERROR_MESAGE);
+        }
+    }
 }

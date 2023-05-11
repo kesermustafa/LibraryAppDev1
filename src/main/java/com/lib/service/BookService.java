@@ -251,6 +251,6 @@ public class BookService {
        List<Book> books = bookRepository.findAll();
        List<BookExcelReport> excelReports = bookMapper.mapl(books);
 
-        return excelReports;
+       return excelReports;
     }
 }

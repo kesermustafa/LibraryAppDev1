@@ -373,4 +373,10 @@ public class UserService {
     public void save(User user) {
         userRepository.save(user);
     }
+
+    public List<User> getUsers() {
+
+        List<User> users = userRepository.findAll();
+        return users;
+    }
 }

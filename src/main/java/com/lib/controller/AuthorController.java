@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -50,8 +51,7 @@ public class AuthorController {
 
         AuthorDTO authorDTO = authorService.getAuthorById(id);
 
-        return ResponseEntity.ok(authorDTO);
-
+        return new ResponseEntity<>(authorDTO, HttpStatus.OK);
     }
 
 
@@ -62,8 +62,7 @@ public class AuthorController {
         authorService.createAuthor(authorRequest);
 
         LibResponse response = new LibResponse(ResponseMessage.AUTHOR_CREATED_RESPONSE_MESSAGE,true);
-
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
 
     }
 
@@ -76,7 +75,7 @@ public class AuthorController {
         authorService.updateAuthor(id,authorRequest);
 
         LibResponse response = new LibResponse(ResponseMessage.AUTHOR_UPDATE_RESPONSE_MESSAGE,true);
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 
@@ -87,7 +86,7 @@ public class AuthorController {
         authorService.removeAuthor(id);
 
         LibResponse response = new LibResponse(ResponseMessage.AUTHOR_DELETE_RESPONSE_MESSAGE,true);
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
 
     }
 
