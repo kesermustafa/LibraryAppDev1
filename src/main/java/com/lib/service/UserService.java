@@ -26,6 +26,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.nio.charset.StandardCharsets;
@@ -131,7 +132,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-
+    @Transactional
     public void updateUser(Long id, UserUpdateRequest userUpdateRequest) {
 
         User user = getById(id);
@@ -379,4 +380,18 @@ public class UserService {
         List<User> users = userRepository.findAll();
         return users;
     }
+
+    public boolean isGiftCart(User cart) {
+
+        try {
+            return cart.getRoles().equals(RoleType.ROLE_MEMBER);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
+
 }

@@ -84,7 +84,7 @@ public class CategoryController {
                                                                   @RequestParam("sort") String prop,
             @RequestParam(value = "directon",required = false,defaultValue = "ASC")  Sort.Direction direction) {
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, prop));
+        Pageable pageable = PageRequest.of( page, size, Sort.by(direction, prop));
 
         Page<CategoryDTO> categoryDTOS = categoryService.findAllWithPage(pageable);
         return ResponseEntity.ok(categoryDTOS);

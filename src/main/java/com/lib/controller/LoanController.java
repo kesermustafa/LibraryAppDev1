@@ -29,14 +29,9 @@ public class LoanController {
 
     private final LoanService loanService;
 
-    private final UserService userService;
-
-    private final BookService bookService;
-
-    public LoanController(LoanService loanService, UserService userService, BookService bookService) {
+    public LoanController(LoanService loanService) {
         this.loanService = loanService;
-        this.userService = userService;
-        this.bookService = bookService;
+
     }
 
 
@@ -49,7 +44,7 @@ public class LoanController {
         return new ResponseEntity<>(loanResponse, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('MEMBER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE') or hasRole('MEMBER')")
     @GetMapping()
     public ResponseEntity<Page<Loan>>getLoansWithPageByUserId(@RequestParam ("page") int page,
                                                               @RequestParam("size") int size,
@@ -95,10 +90,9 @@ public class LoanController {
     }
 
 
-    @PreAuthorize("hasRole('MEMBER')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE') or hasRole('MEMBER')")
     @GetMapping("/{id}")
     public ResponseEntity<Loan> getLoanById(@PathVariable(value="id") Long loanId){
-
 
         Loan loan = loanService.getByIdAndUserId(loanId);
 
@@ -117,6 +111,8 @@ public class LoanController {
     }
 
 
+
+
     @PutMapping("/loans/{id}")
     @PreAuthorize("hasRole('ADMIN') or  hasRole('EMPLOYEE')")
     public ResponseEntity<LoanUpdateResponse> updateLoan(@PathVariable(value = "id") Long loanId,
@@ -125,6 +121,8 @@ public class LoanController {
         LoanUpdateResponse updatedLoanResponse = loanService.updateLoan(loanId, updateLoanRequest);
         return new ResponseEntity<>(updatedLoanResponse, HttpStatus.OK);
     }
+
+
 
 
 
